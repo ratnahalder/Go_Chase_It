@@ -27,10 +27,12 @@ void process_image_callback(const sensor_msgs::Image img)
 
     // Loop through each pixel in the image and check if its contains a white pixel representing white ball
     for (int i = 0; i < img.height; i++) {
-    	for (int j = 0; j < img.step; j++) {
+    	for (int j = 0; j < img.step; j += 3) {
     		int pos = i * img.step + j;
-    		if (img.data[pos] == white_pixel) {
-	            ball_pos = j;
+    		if (img.data[pos] == white_pixel 
+		    && img.data[pos + 1] == white_pixel
+		    && img.data[pos + 2] == white_pixel) {
+	            ball_pos = j + 1;
 	            break;
         	}
     	}
